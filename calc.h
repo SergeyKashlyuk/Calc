@@ -1,16 +1,29 @@
 #ifndef CALC_H
 #define CALC_H
 
-#ifdef __cplusplus
-extern "C"
+class Calculator
 {
-#endif
+    std::istream*     input;
+    double       number_value;
+    std::string  string_value;
 
-double calc(const char* expression);
-void error_and_exit(const char* s);
+    enum Token_value
+    {
+        NAME, NUMBER, END, PLUS = '+', MINUS = '-', MUL = '*', DIV = '/',
+        PRINT = ',', ASSIGN = '=', LP = '(', RP = ')'
+    };
+    Token_value curr_tok = PRINT;
 
-#ifdef __cplusplus
-}
-#endif
+    double expr(bool get);
+    double term(bool get);
+    double prim(bool get);
+    bool is_space(const char ch);
+    Token_value get_token();
+    void error(const std::string &s);
+
+public:
+    double calc(const std::string& expression);
+};
+
 
 #endif // CALC_H
